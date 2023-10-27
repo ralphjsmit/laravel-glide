@@ -21,21 +21,27 @@ class GlideImageGenerator
         return $attributes;
     }
 
-    protected function getImageWidth(string $path): int
+    protected function getImageWidth(string $path): ?int
     {
         return Cache::rememberForever("glide::image-generator.image-width.{$path}", function () use ($path) {
-            return Image::make(public_path($path))->width();
+            return rescue(fn () => Image::make(public_path($path))->width());
         });
     }
 
     protected function getSrcAttribute(string $path, int | null $maxWidth): string
     {
-        return $maxWidth !== null
-            // For generating the `src` url, we should not use values bigger than the image width, because
-            // the browser will load these images at their original size as second request after picking
-            // the optimal version. An upsized version should be a convenience thing and not a default.
-            ? $this->generateUrl($path, ['width' => min($this->getImageWidth($path), $maxWidth)])
-            : asset($path);
+        if ( $maxWidth === null ) {
+            return asset($path);
+        }
+
+        $imageWidth = $this->getImageWidth($path);
+
+        // For generating the `src` url, we should not use values bigger than the image width, because
+        // the browser will load these images at their original size as second request after picking
+        // the optimal version. An upsized version should be a convenience thing and not a default.
+        return $this->generateUrl($path, [
+            'width' => $imageWidth ? min($imageWidth, $maxWidth) : $maxWidth,
+        ]);
     }
 
     protected function getSrcsetAttribute(string $path, int | null $maxWidth): string
@@ -54,7 +60,12 @@ class GlideImageGenerator
             6000,
         ]);
 
-        $scale = $scale->when($maxWidth)->reject(fn (int $width) => $width > $maxWidth);
+        $imageWidth = $this->getImageWidth($path);
+
+        $scale = $scale
+            ->when($maxWidth)->reject(fn (int $width) => $width > $maxWidth)
+            // We will up-scale an image up to 2x it's original size. Above that it has no use anymore.
+            ->when($imageWidth)->reject(fn (int $width) => $width > ($imageWidth * 2));
 
         return $scale
             ->mapWithKeys(function (int $width) use ($path): array {
