@@ -15,7 +15,7 @@ class ClearCacheCommand extends Command
             glide()->getCachePath()
         );
 
-        $this->info("Cleared Glide cache");
+        $this->info('Cleared Glide cache');
 
         return static::SUCCESS;
     }
