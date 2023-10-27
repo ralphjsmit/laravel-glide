@@ -56,6 +56,8 @@ Glide will **cache all images**, so that it doesn't have to generate the same im
 
 Because the browser in this case only requests the 1600px, the other URLs are **not called** and therefore also **not processed** by Glide. This solution is therefore perfect, because it will only do the **minimum amount of work**.
 
+Your image will automatically be upscaled to a maximum of 2x the resolution provided in your original image.
+
 The `glide()->src()` function is even **auto-completed** if you use Laravel Idea to the files in your public-/asset-path.
 
 ### Setting a maximum width
