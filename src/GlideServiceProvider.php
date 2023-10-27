@@ -11,8 +11,6 @@ class GlideServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-glide')
-            ->hasConfigFile()
-            ->hasRoute('web')
-            ->hasViews();
+            ->hasRoute('web');
     }
 }
