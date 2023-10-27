@@ -16,8 +16,8 @@ class GlideController
     {
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory($request),
-            'source' => public_path(),
-            'cache' => storage_path('framework/cache/glide'),
+            'source' => glide()->getSourcePath(),
+            'cache' => glide()->getCachePath(),
             'base_url' => '',
         ]);
 

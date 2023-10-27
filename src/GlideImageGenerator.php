@@ -21,13 +21,6 @@ class GlideImageGenerator
         return $attributes;
     }
 
-    protected function getImageWidth(string $path): ?int
-    {
-        return Cache::rememberForever("glide::image-generator.image-width.{$path}", function () use ($path) {
-            return rescue(fn () => Image::make(public_path($path))->width());
-        });
-    }
-
     protected function getSrcAttribute(string $path, int | null $maxWidth): string
     {
         if ( $maxWidth === null ) {
@@ -58,6 +51,10 @@ class GlideImageGenerator
             4000,
             5000,
             6000,
+            7000,
+            8000,
+            9000,
+            10000,
         ]);
 
         $imageWidth = $this->getImageWidth($path);
@@ -65,7 +62,13 @@ class GlideImageGenerator
         $scale = $scale
             ->when($maxWidth)->reject(fn (int $width) => $width > $maxWidth)
             // We will up-scale an image up to 2x it's original size. Above that it has no use anymore.
-            ->when($imageWidth)->reject(fn (int $width) => $width > ($imageWidth * 2));
+            ->when($imageWidth)->reject(fn (int $width) => $width > ( $imageWidth * 2 ));
+
+        // Push a final version with exactly the correct max-width if the difference with the last item
+        // in the scale is bigger than 50px. Otherwise, the additional provided type is not so useful.
+        if ( $maxWidth && ( $maxWidth - $scale->last() ) > 50 ) {
+            $scale->push($maxWidth);
+        }
 
         return $scale
             ->mapWithKeys(function (int $width) use ($path): array {
@@ -75,8 +78,25 @@ class GlideImageGenerator
             ->implode(', ');
     }
 
+    protected function getImageWidth(string $path): ?int
+    {
+        return Cache::rememberForever("glide::image-generator.image-width.{$path}", function () use ($path) {
+            return rescue(fn () => Image::make(public_path($path))->width());
+        });
+    }
+
     protected function generateUrl(string $path, array $parameters): string
     {
         return route('glide.generate', ['source' => $path, ...$parameters]);
+    }
+
+    public function getSourcePath(): string
+    {
+        return public_path();
+    }
+
+    public function getCachePath(): string
+    {
+        return storage_path('framework/cache/glide');
     }
 }

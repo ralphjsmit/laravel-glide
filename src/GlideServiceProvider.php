@@ -2,6 +2,7 @@
 
 namespace RalphJSmit\Laravel\Glide;
 
+use RalphJSmit\Laravel\Glide\Commands\ClearCacheCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -11,6 +12,7 @@ class GlideServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('laravel-glide')
-            ->hasRoute('web');
+            ->hasRoute('web')
+            ->hasCommand(ClearCacheCommand::class);
     }
 }
