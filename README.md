@@ -131,6 +131,10 @@ I hope this package will be useful to you! If you have any ideas or suggestions 
 
 PRs are welcome, so feel free to fork and submit a pull request. I'll be happy to review your changes, think along and add them to the package.
 
+## Credits
+
+This package was partially inspired by the archived [flowframe/laravel-glide](https://github.com/Flowframe/laravel-glide) by [Lars Klopstra](https://github.com/larsklopstra).
+
 ## General
 
 🐞 If you spot a bug, please submit a detailed issue and I'll try to fix it as soon as possible.
