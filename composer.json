@@ -37,9 +37,6 @@
             "RalphJSmit\\Laravel\\Glide\\": "src/"
         }
     },
-    "autoload-dev": {
-        "psr-4": {}
-    },
     "scripts": {
         "format": "vendor/bin/pint"
     },
