@@ -38,9 +38,7 @@
         }
     },
     "autoload-dev": {
-        "psr-4": {
-            "Workbench\\App\\": "workbench/app/"
-        }
+        "psr-4": {}
     },
     "scripts": {
         "format": "vendor/bin/pint"
