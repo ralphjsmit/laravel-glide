@@ -46,6 +46,7 @@ Under the hood, this will be **converted to the following** output:
         https://your-app.com/glide/img/my-huge-image.png?width=2500 2500w, 
         ...
     " 
+    loading="lazy"
     alt="Some alt text" 
 />
 ```
@@ -78,6 +79,7 @@ This will output the image variations up to the last version that fits inside th
         https://your-app.com/glide/img/my-huge-image.png?width=800 800w, 
         https://your-app.com/glide/img/my-huge-image.png?width=1000 1000w, 
     " 
+    loading="lazy"
     alt="Some alt text" 
 />
 ```
@@ -101,18 +103,19 @@ Which will result in:
         https://your-app.com/glide/img/my-huge-image.png?width=1000 1000w, 
     " 
     sizes="(max-width: 500px) 100vw, 50vw"
+    loading="lazy"
     alt="Some alt text" 
 />
 ```
 
-### Lazy loading images
+### Eager loading images
 
-HTML allows for a native way to lazy load images if they are below the fold. This reduces the initial page size and speeds up the page load.
+HTML allows for a native way to lazy load images if they are below the fold. This reduces the initial page size and speeds up the page load. Lazy loading for images is enabled by default for URLs outputted by Glide.
 
-You may enable this parameter by passing `true` to the `lazy` parameter in the `glide()->src()` function:
+However, if you need to eager load an image, you can pass `lazy: false` to disable lazy loading for an image. You should only do this for images that are above the fold on initial page load, otherwise it will slow down your page unnecessarily.
 
 ```blade
-<img {{ glide()->src('img/my-huge-image.png', 1000, sizes: '(max-width: 500px) 100vw, 50vw', lazy: true) }} alt="Some alt text" />
+<img {{ glide()->src('img/my-huge-image.png', 1000, sizes: '(max-width: 500px) 100vw, 50vw', lazy: false) }} alt="Some alt text" />
 ```
 
 Which will result in:
@@ -126,7 +129,7 @@ Which will result in:
         https://your-app.com/glide/img/my-huge-image.png?width=1000 1000w, 
     " 
     sizes="(max-width: 500px) 100vw, 50vw"
-    loading="lazy"
+    <!-- Loading attribute is omitted, so it will be eager loaded -->
     alt="Some alt text" 
 />
 
