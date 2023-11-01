@@ -8,7 +8,7 @@ use Intervention\Image\Facades\Image;
 
 class GlideImageGenerator
 {
-    public function src(string $path, int $maxWidth = null, string $sizes = null): ComponentAttributeBag
+    public function src(string $path, int $maxWidth = null, string $sizes = null, bool $lazy = true): ComponentAttributeBag
     {
         $attributes = new ComponentAttributeBag();
 
@@ -16,6 +16,7 @@ class GlideImageGenerator
             'src' => $this->getSrcAttribute($path, $maxWidth),
             'srcset' => $this->getSrcsetAttribute($path, $maxWidth),
             ...$sizes !== null ? ['sizes' => $sizes] : [],
+            ...$lazy ? ['loading' => 'lazy'] : [],
         ]);
 
         return $attributes;
