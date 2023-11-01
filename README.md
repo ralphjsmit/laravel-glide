@@ -87,7 +87,7 @@ This will output the image variations up to the last version that fits inside th
 You can provide a `sizes` attribute as well. This attribute is handy to tell the browser what **width an image will approximately have at a certain breakpoint**. You can give any value you want. This is an example of showing that on screens smaller than 500px, the image is approximately full-width, and on screens above (the default), it is approximately 50% of the screen width: 
 
 ```blade
-<img {{ glide()->src('img/my-huge-image.png', 1000, '(max-width: 500px) 100vw, 50vw') }} alt="Some alt text" />
+<img {{ glide()->src('img/my-huge-image.png', 1000, sizes: '(max-width: 500px) 100vw, 50vw') }} alt="Some alt text" />
 ```
 
 Which will result in:
@@ -103,8 +103,33 @@ Which will result in:
     sizes="(max-width: 500px) 100vw, 50vw"
     alt="Some alt text" 
 />
+```
 
-However, this is just
+### Lazy loading images
+
+HTML allows for a native way to lazy load images if they are below the fold. This reduces the initial page size and speeds up the page load.
+
+You may enable this parameter by passing `true` to the `lazy` parameter in the `glide()->src()` function:
+
+```blade
+<img {{ glide()->src('img/my-huge-image.png', 1000, sizes: '(max-width: 500px) 100vw, 50vw', lazy: true) }} alt="Some alt text" />
+```
+
+Which will result in:
+
+```blade
+<img 
+    src="https://your-app.com/glide/img/my-huge-image.png?width=1000" 
+    srcset="
+        https://your-app.com/glide/img/my-huge-image.png?width=400 400w, 
+        https://your-app.com/glide/img/my-huge-image.png?width=800 800w, 
+        https://your-app.com/glide/img/my-huge-image.png?width=1000 1000w, 
+    " 
+    sizes="(max-width: 500px) 100vw, 50vw"
+    loading="lazy"
+    alt="Some alt text" 
+/>
+
 ```
 
 ### Clearing cache
