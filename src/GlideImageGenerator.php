@@ -8,7 +8,7 @@ use Intervention\Image\Facades\Image;
 
 class GlideImageGenerator
 {
-    public function src(string $path, int $maxWidth = null, string $sizes = null, bool $lazy = true): ComponentAttributeBag
+    public function src(string $path, ?int $maxWidth = null, ?string $sizes = null, bool $lazy = true): ComponentAttributeBag
     {
         $attributes = new ComponentAttributeBag();
 
