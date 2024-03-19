@@ -16,7 +16,6 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-
       - name: Run Pint
         uses: aglipanci/laravel-pint-action@latest
         with:
