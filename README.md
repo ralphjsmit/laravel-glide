@@ -23,7 +23,7 @@ You do not need to publish a config file or anything else.
 In order to demonstrate this package's usage, we'll use the following example. Previously, you **would include** an image like this:
 
 ```blade
-<img src="{{ asset('img/my-huge-image.png') }} alt="Some alt text" />
+<img src="{{ asset('img/my-huge-image.png') }}" alt="Some alt text" />
 ```
 
 This loads the `my-huge-image.png` on it's full resolution on every screen size. **With this package**, you'd do this:
