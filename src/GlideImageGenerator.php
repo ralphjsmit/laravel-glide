@@ -15,7 +15,7 @@ class GlideImageGenerator
         $attributes->setAttributes([
             'src' => $this->getSrcAttribute($path, $maxWidth),
             'srcset' => $this->getSrcsetAttribute($path, $maxWidth),
-            'style' => 'max-width: '.$this->getImageWidth($path).'px',
+            'style' => "max-width: {$this->getImageWidth($path)}px",
             ...$sizes !== null ? ['sizes' => $sizes] : [],
             ...$lazy ? ['loading' => 'lazy'] : [],
         ]);
