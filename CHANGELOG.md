@@ -2,6 +2,10 @@
 
 All notable changes to `ralphjsmit/laravel-glide` will be documented in this file.
 
+## 1.2.3 - 2024-12-26
+
+- Feat: ability to let images grow past their full size
+
 ## 1.2.1 - 2024-04-13
 
 - Chore: upgrade to league/glide-symfony because the Laravel wrapper is an empty wrapper and not doing anything specific.
