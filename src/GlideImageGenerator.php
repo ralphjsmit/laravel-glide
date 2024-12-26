@@ -8,14 +8,14 @@ use Intervention\Image\Facades\Image;
 
 class GlideImageGenerator
 {
-    public function src(string $path, ?int $maxWidth = null, ?string $sizes = null, bool $lazy = true): ComponentAttributeBag
+    public function src(string $path, ?int $maxWidth = null, ?string $sizes = null, bool $lazy = true, bool $grow = false): ComponentAttributeBag
     {
         $attributes = new ComponentAttributeBag();
 
         $attributes->setAttributes([
             'src' => $this->getSrcAttribute($path, $maxWidth),
             'srcset' => $this->getSrcsetAttribute($path, $maxWidth),
-            'style' => "max-width: {$this->getImageWidth($path)}px",
+            ...$grow ? [] : ['style' => "max-width: {$this->getImageWidth($path)}px"],
             ...$sizes !== null ? ['sizes' => $sizes] : [],
             ...$lazy ? ['loading' => 'lazy'] : [],
         ]);
