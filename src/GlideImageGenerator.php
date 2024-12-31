@@ -62,9 +62,9 @@ class GlideImageGenerator
         $imageWidth = $this->getImageWidth($path);
 
         $scale = $scale
-            ->when($maxWidth)->reject(fn (int $width) => $width > $maxWidth)
+            ->when($maxWidth)->reject(fn(int $width) => $width > $maxWidth)
             // We will up-scale an image up to 2x it's original size. Above that it has no use anymore.
-            ->when($imageWidth)->reject(fn (int $width) => $width > ($imageWidth * 2));
+            ->when($imageWidth)->reject(fn(int $width) => $width > ($imageWidth * 2));
 
         // Push a final version with exactly the correct max-width if the difference with the last item
         // in the scale is bigger than 50px. Otherwise, the additional provided type is not so useful.
@@ -76,14 +76,14 @@ class GlideImageGenerator
             ->mapWithKeys(function (int $width) use ($path): array {
                 return [$width => $this->generateUrl($path, ['width' => $width])];
             })
-            ->map(fn (string $src, int $width) => "{$src} {$width}w")
+            ->map(fn(string $src, int $width) => "{$src} {$width}w")
             ->implode(', ');
     }
 
     protected function getImageWidth(string $path): ?int
     {
         return Cache::rememberForever("glide::image-generator.image-width.{$path}", function () use ($path) {
-            return rescue(fn () => Image::make(public_path($path))->width());
+            return rescue(fn() => Image::make($path)->width());
         });
     }
 
