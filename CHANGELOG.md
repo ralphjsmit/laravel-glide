@@ -2,6 +2,10 @@
 
 All notable changes to `ralphjsmit/laravel-glide` will be documented in this file.
 
+## 1.3.0 - 2025-02-25
+
+- Feat: Laravel 12 support in #10 by @poldixd.
+
 ## 1.2.3 - 2024-12-26
 
 - Feat: ability to let images grow past their full size
