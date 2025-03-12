@@ -143,7 +143,7 @@ If you want to **clear the cache**, you can call the following command:
 php artisan glide:clear
 ```
 
-This will **empty the entire Glide cache**. You can choose to put this in your deployment script on production if you every _modify_ your current images (adding new images has no effect on the cache, they will just be generated anew). Another option is to only run this command when you actually _modify_ an existing image and then run this command manually via SSH on the server in that situation.
+This will **empty the entire Glide cache**. You can choose to put this in your deployment script on production if you often _modify_ your current images (adding new images has no effect on the cache, they will just be generated anew). Another option is to only run this command when you actually _modify_ an existing image and then run this command manually via SSH on the server in that situation.
 
 ## Glide Configuration
 
