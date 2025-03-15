@@ -3,6 +3,7 @@
 namespace RalphJSmit\Laravel\Glide;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
 use Intervention\Image\Facades\Image;
 
@@ -12,11 +13,13 @@ class GlideImageGenerator
     {
         $attributes = new ComponentAttributeBag();
 
+        $isGlideSupported = $this->isGlideSupported($path);
+
         $attributes->setAttributes([
             'src' => $this->getSrcAttribute($path, $maxWidth),
-            'srcset' => $this->getSrcsetAttribute($path, $maxWidth),
+            ...$isGlideSupported ? ['srcset' => $this->getSrcsetAttribute($path, $maxWidth)] : [],
             ...$grow ? [] : ['style' => "max-width: {$this->getImageWidth($path)}px"],
-            ...$sizes !== null ? ['sizes' => $sizes] : [],
+            ...($isGlideSupported && $sizes !== null) ? ['sizes' => $sizes] : [],
             ...$lazy ? ['loading' => 'lazy'] : [],
         ]);
 
@@ -25,6 +28,10 @@ class GlideImageGenerator
 
     protected function getSrcAttribute(string $path, ?int $maxWidth): string
     {
+        if (! $this->isGlideSupported($path)) {
+            return asset($path);
+        }
+
         if ($maxWidth === null) {
             return asset($path);
         }
@@ -90,6 +97,11 @@ class GlideImageGenerator
     protected function generateUrl(string $path, array $parameters): string
     {
         return route('glide.generate', ['source' => $path, ...$parameters]);
+    }
+
+    protected function isGlideSupported(string $path): bool
+    {
+        return ! Str::endsWith($path, ['.svg']);
     }
 
     public function getSourcePath(): string
