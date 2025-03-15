@@ -2,6 +2,10 @@
 
 All notable changes to `ralphjsmit/laravel-glide` will be documented in this file.
 
+## 1.3.1 - 2025-03-15
+
+- Fix: do not attempt to generate a `srcset` for provided SVG files.
+
 ## 1.3.0 - 2025-02-25
 
 - Feat: Laravel 12 support in #10 by @poldixd.
