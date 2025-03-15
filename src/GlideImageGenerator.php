@@ -11,7 +11,7 @@ class GlideImageGenerator
 {
     public function src(string $path, ?int $maxWidth = null, ?string $sizes = null, bool $lazy = true, bool $grow = false): ComponentAttributeBag
     {
-        $attributes = new ComponentAttributeBag;
+        $attributes = new ComponentAttributeBag();
 
         $isGlideSupported = $this->isGlideSupported($path);
 
