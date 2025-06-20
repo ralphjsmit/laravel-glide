@@ -23,7 +23,7 @@ class GlideImageGenerator
         ]);
 
         if (! $grow) {
-            $attributes->style("max-width: {$this->getImageWidth($path)}px");
+            $attributes = $attributes->style("max-width: {$this->getImageWidth($path)}px");
         }
 
         return $attributes;
