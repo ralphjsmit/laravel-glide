@@ -18,10 +18,13 @@ class GlideImageGenerator
         $attributes->setAttributes([
             'src' => $this->getSrcAttribute($path, $maxWidth),
             ...$isGlideSupported ? ['srcset' => $this->getSrcsetAttribute($path, $maxWidth)] : [],
-            ...$grow ? [] : ['style' => "max-width: {$this->getImageWidth($path)}px"],
             ...($isGlideSupported && $sizes !== null) ? ['sizes' => $sizes] : [],
             ...$lazy ? ['loading' => 'lazy'] : [],
         ]);
+
+        if (! $grow) {
+            $attributes->style("max-width: {$this->getImageWidth($path)}px");
+        }
 
         return $attributes;
     }
