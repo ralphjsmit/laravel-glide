@@ -2,6 +2,10 @@
 
 All notable changes to `ralphjsmit/laravel-glide` will be documented in this file.
 
+## 1.3.2 - 2025-06-20
+
+- Fix: allow merging style attribute.
+
 ## 1.3.1 - 2025-03-15
 
 - Fix: do not attempt to generate a `srcset` for provided SVG files.
