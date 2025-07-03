@@ -2,6 +2,10 @@
 
 All notable changes to `ralphjsmit/laravel-glide` will be documented in this file.
 
+## 1.3.3 - 2025-07-03
+
+- Feat: support scoping Glide URL to domain
+
 ## 1.3.2 - 2025-06-20
 
 - Fix: allow merging style attribute.
