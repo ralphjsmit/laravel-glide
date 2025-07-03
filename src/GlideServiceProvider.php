@@ -13,6 +13,7 @@ class GlideServiceProvider extends PackageServiceProvider
         $package
             ->name('laravel-glide')
             ->hasRoute('web')
-            ->hasCommand(ClearCacheCommand::class);
+            ->hasCommand(ClearCacheCommand::class)
+            ->hasConfigFile();
     }
 }
