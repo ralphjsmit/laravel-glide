@@ -12,8 +12,10 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class GlideController
 {
-    public function __invoke(Request $request, Application $application, Filesystem $filesystem, string $source): StreamedResponse
+    public function __invoke(Request $request, Application $application, Filesystem $filesystem, string $domainOrSource, ?string $source = null): StreamedResponse
     {
+        $source = $source ?? $domainOrSource;
+
         $server = ServerFactory::create([
             'response' => new SymfonyResponseFactory($request),
             'source' => glide()->getSourcePath(),
