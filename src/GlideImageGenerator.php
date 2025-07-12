@@ -3,10 +3,10 @@
 namespace RalphJSmit\Laravel\Glide;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\URL;
 
 class GlideImageGenerator
 {
@@ -19,11 +19,11 @@ class GlideImageGenerator
         $attributes->setAttributes([
             'src' => $this->getSrcAttribute($path, $maxWidth),
             ...$isGlideSupported ? ['srcset' => $this->getSrcsetAttribute($path, $maxWidth)] : [],
-            ...( $isGlideSupported && $sizes !== null ) ? ['sizes' => $sizes] : [],
+            ...($isGlideSupported && $sizes !== null) ? ['sizes' => $sizes] : [],
             ...$lazy ? ['loading' => 'lazy'] : [],
         ]);
 
-        if ( ! $grow ) {
+        if (! $grow) {
             $attributes = $attributes->style("max-width: {$this->getImageWidth($path)}px");
         }
 
@@ -32,11 +32,11 @@ class GlideImageGenerator
 
     protected function getSrcAttribute(string $path, ?int $maxWidth): string
     {
-        if ( ! $this->isGlideSupported($path) ) {
+        if (! $this->isGlideSupported($path)) {
             return asset($path);
         }
 
-        if ( $maxWidth === null ) {
+        if ($maxWidth === null) {
             return asset($path);
         }
 
@@ -75,11 +75,11 @@ class GlideImageGenerator
         $scale = $scale
             ->when($maxWidth)->reject(fn (int $width) => $width > $maxWidth)
             // We will up-scale an image up to 2x it's original size. Above that it has no use anymore.
-            ->when($imageWidth)->reject(fn (int $width) => $width > ( $imageWidth * 2 ));
+            ->when($imageWidth)->reject(fn (int $width) => $width > ($imageWidth * 2));
 
         // Push a final version with exactly the correct max-width if the difference with the last item
         // in the scale is bigger than 50px. Otherwise, the additional provided type is not so useful.
-        if ( $maxWidth && ( $maxWidth - $scale->last() ) > 50 ) {
+        if ($maxWidth && ($maxWidth - $scale->last()) > 50) {
             $scale->push($maxWidth);
         }
 
