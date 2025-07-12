@@ -10,3 +10,7 @@ $route = Route::get('glide/{source}', GlideController::class)
 if ($domain = config('glide.route.domain')) {
     $route->domain($domain);
 }
+
+if (config('glide.route.signed')) {
+    $route->middleware('signed');
+}
