@@ -3,6 +3,7 @@
 namespace RalphJSmit\Laravel\Glide;
 
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
 use Intervention\Image\Facades\Image;
@@ -99,7 +100,9 @@ class GlideImageGenerator
 
     protected function generateUrl(string $path, array $parameters): string
     {
-        return route('glide.generate', ['source' => $path, ...$parameters]);
+        return config('glide.route.signed')
+            ? Url::signedRoute('glide.generate', ['source' => $path, ...$parameters])
+            : route('glide.generate', ['source' => $path, ...$parameters]);
     }
 
     protected function isGlideSupported(string $path): bool
