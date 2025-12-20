@@ -6,8 +6,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
 use Illuminate\View\ComponentAttributeBag;
-use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use RuntimeException;
 
 class GlideImageGenerator
 {
@@ -113,7 +113,15 @@ class GlideImageGenerator
 
     protected function getImageManager(): ImageManager
     {
-        return ImageManager::gd();
+        if (extension_loaded('gd')) {
+            return ImageManager::gd();
+        }
+
+        if (extension_loaded('imagick')) {
+            return ImageManager::imagick();
+        }
+
+        throw new RuntimeException('No supported image driver (GD or Imagick) is installed.');
     }
 
     public function getSourcePath(): string
