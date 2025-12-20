@@ -95,7 +95,7 @@ class GlideImageGenerator
     protected function getImageWidth(string $path): ?int
     {
         return Cache::rememberForever("glide::image-generator.image-width.{$path}", function () use ($path) {
-            return rescue(fn () => $this->imageManager()->read(public_path($path))->width());
+            return rescue(fn () => $this->getImageManager()->read(public_path($path))->width());
         });
     }
 
@@ -111,9 +111,9 @@ class GlideImageGenerator
         return ! Str::endsWith($path, ['.svg']);
     }
 
-    protected function imageManager(): ImageManager
+    protected function getImageManager(): ImageManager
     {
-        return new ImageManager(new Driver());
+        return ImageManager::gd();
     }
 
     public function getSourcePath(): string
