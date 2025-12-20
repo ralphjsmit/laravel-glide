@@ -6,8 +6,8 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use League\Glide\Filesystem\FileNotFoundException;
-use RalphJSmit\Laravel\Glide\Responses\ResponseFactory;
 use League\Glide\ServerFactory;
+use RalphJSmit\Laravel\Glide\Http\Controllers\GlideController\GlideResponseFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class GlideController
@@ -17,7 +17,7 @@ class GlideController
         $source = $source ?? $domainOrSource;
 
         $server = ServerFactory::create([
-            'response' => new ResponseFactory($request),
+            'response' => new GlideResponseFactory($request),
             'source' => glide()->getSourcePath(),
             'cache' => glide()->getCachePath(),
             'base_url' => '',

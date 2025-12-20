@@ -1,20 +1,17 @@
 <?php
 
-namespace RalphJSmit\Laravel\Glide\Responses;
+namespace RalphJSmit\Laravel\Glide\Http\Controllers\GlideController;
 
 use League\Flysystem\FilesystemOperator;
 use League\Glide\Responses\ResponseFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class ResponseFactory implements ResponseFactoryInterface
+class GlideResponseFactory implements ResponseFactoryInterface
 {
-    protected ?Request $request;
-
-    public function __construct(?Request $request = null)
-    {
-        $this->request = $request;
-    }
+    public function __construct(
+        protected ?Request $request = null
+    ) {}
 
     public function create(FilesystemOperator $cache, string $path): StreamedResponse
     {
