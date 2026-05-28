@@ -16,9 +16,11 @@ use RuntimeException;
 
 class GlideImageGenerator
 {
-    public function src(string $path, ?int $maxWidth = null, ?string $sizes = null, bool $lazy = true, bool $grow = false, ?string $disk = null): ComponentAttributeBag
+    public function src(string $path, ?int $maxWidth = null, ?string $sizes = null, bool $lazy = true, ?bool $grow = null, ?string $disk = null): ComponentAttributeBag
     {
         $attributes = new ComponentAttributeBag();
+
+        $grow = $grow ?? config('glide.grow');
 
         $isGlideSupported = $this->isGlideSupported($path);
 

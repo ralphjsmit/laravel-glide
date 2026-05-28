@@ -147,7 +147,15 @@ This will **empty the entire Glide cache**. You can choose to put this in your d
 
 ## Glide Configuration
 
-Currently, the package **does not provide configuration** options and it just assumes **sensible defaults**.
+Currently, the package **does not provide advanced configuration** options and it just assumes **sensible defaults**.
+
+If you want to modify the basic configuration values, you can publish the config file:
+
+```bash
+php artisan vendor:publish --tag=glide-config
+```
+
+After publishing, you can modify the configuration in `config/glide.php`.
 
 Since it is geared at auto-generating versions for static images, it will **assume** the `public_path()`/`asset()` as root folder for the images.
 
